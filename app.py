@@ -5,7 +5,6 @@ import snowflake.connector.errors  # <-- Corrected import
 from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
 import numpy as np
-snowflake_config = st.secrets["snowflake"]
 #connect to snowflake function
 SNOWFLAKE_CONFIG = {
     "account": "xh84085.ap-southeast-1",
