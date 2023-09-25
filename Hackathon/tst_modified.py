@@ -8,7 +8,7 @@ import numpy as np
 import plost
 from datetime import datetime, timedelta
 from utils import charts, gui, processing
-#from utils import snowflake_connector as sf
+from utils import snowflake_connector as sc
 from utils import sql as sql
 from PIL import Image
 import base64
@@ -786,7 +786,7 @@ def monitor2():
     gui.space(1)
     st.subheader("WAREHOUSE METERING")
     query = sql.CONSUMPTION_PER_SERVICE_TYPE_QUERY
-    df = sf.sql_to_dataframe(
+    df = sc.sql_to_dataframe(
         query.format(date_from=date_from, date_to=date_to)
     )
     all_values = df["SERVICE_TYPE"].unique().tolist()
@@ -851,7 +851,7 @@ def monitor2():
         gui.hbar()
         st.subheader("Warehouse")
     # Get data
-    warehouse_usage_hourly = sf.sql_to_dataframe(
+    warehouse_usage_hourly = sc.sql_to_dataframe(
         sql.WAREHOUSE_USAGE_HOURLY.format(
             date_from=date_from,
             date_to=date_to,
@@ -897,7 +897,7 @@ def monitor2():
     # -----------------
     st.subheader("Queries")
     # Get data
-    queries_data = sf.get_queries_data(
+    queries_data = sc.get_queries_data(
         date_from,
         date_to,
     )
@@ -970,7 +970,7 @@ def monitor2():
         "**Query VS Time Frequency**: longest and most frequent queries",
         "Log scales (🖱️ hover for real values!)",
     )
-    queries_agg = sf.sql_to_dataframe(
+    queries_agg = sc.sql_to_dataframe(
         sql.QUERIES_COUNT_QUERY.format(
             date_from=date_from,
             date_to=date_to,
@@ -994,7 +994,7 @@ def monitor2():
     # -------------
     st.subheader("Users")
     # Get data
-    users_data = sf.sql_to_dataframe(
+    users_data = sc.sql_to_dataframe(
         sql.USERS_QUERY.format(
             date_from=date_from,
             date_to=date_to,
