@@ -7,7 +7,7 @@ streamlit_option_menu
 plost
 numpy
 matplotlib
-altair
+altair>5
 datetime
 sqlparse
 millify
