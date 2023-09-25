@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plost
 from datetime import datetime, timedelta
-from utils import charts, gui, processing
+from Hackathon/utils import charts, gui, processing
 from utils import snowflake_connector as sf
 from utils import sql as sql
 from PIL import Image
