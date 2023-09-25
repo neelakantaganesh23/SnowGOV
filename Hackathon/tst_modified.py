@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import snowflake.connector
+import snowflake.connector as sf
 import snowflake.connector.errors  # <-- Corrected import
 from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ import numpy as np
 import plost
 from datetime import datetime, timedelta
 from utils import charts, gui, processing
-from utils import snowflake_connector as sf
+#from utils import snowflake_connector as sf
 from utils import sql as sql
 from PIL import Image
 import base64
