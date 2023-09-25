@@ -1,6 +1,5 @@
-snowflake
+snowflake-connector-python
 snowflake-snowpark-python
-snowflake
 pandas
 streamlit
 streamlit_option_menu
