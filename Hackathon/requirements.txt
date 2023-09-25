@@ -1,0 +1,17 @@
+snowflake-connector-python
+snowflake-snowpark-python
+snowflake
+pandas
+streamlit
+streamlit_option_menu
+plost
+numpy
+matplotlib
+altair
+datetime
+sqlparse
+millify
+typing
+toml
+plotly
+pillow
