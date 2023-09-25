@@ -13,7 +13,7 @@ from utils import sql as sql
 from PIL import Image
 import base64
 import plotly.express as px
-image = Image.open('C:\\Users\\ganesh.neelakanta\\Documents\\Hackathon\\SnowGov.png')
+image = Image.open('Hackathon/SnowGov.png')
 st.sidebar.image(image, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 snowflake_config = st.secrets["sf_usage_app"]
 #connect to snowflake function
@@ -1013,7 +1013,7 @@ def monitor2():
     )
 def about():
     # Create an expander for the about sectio
-    image_path = 'C:\\Users\\ganesh.neelakanta\\Documents\\Hackathon\\SnowGov.png'
+    image_path = 'Hackathon/SnowGov.png'
     image = Image.open(image_path)
     st.image(image, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
     with st.expander("Description", expanded=True):
