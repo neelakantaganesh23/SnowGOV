@@ -1023,11 +1023,12 @@ def monitor2():
     )
 def about():
     # Create an expander for the about section
+    # Load and display the image with adjusted width
+    image_path = 'Hackathon/SnowGov.png'
+    image = Image.open(image_path)
+    st.image(image, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
     with st.expander("About", expanded=True):
-        # Load and display the image with adjusted width
-        image_path = 'Hackathon/SnowGov.png'
-        image = Image.open(image_path)
-        st.image(image, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+       
         # Write the about content with styling
         st.markdown("""
             <div style="font-family: 'Sans serif';">
