@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import snowflake.connector
-import snowflake.connector.errors  # <-- Corrected import
+import snowflake.connector.errors  # <-- Corrected importsa
 from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1030,7 +1030,7 @@ def about():
         st.image(image, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
         # Write the about content with styling
         st.markdown("""
-            <div style="font-family: 'Sans-serif';">
+            <div style="font-family: 'Sans serif';">
                 <p>This project is to demonstrate the power of Snowflake Native Apps. The objective of this project is to develop an App that provides GUI-based governance features for managing the Snowflake environment. Some of the features include:</p>
                 <ul>
                     <li>User interface through which the IT team can configure Organization and Account Parameters</li>
