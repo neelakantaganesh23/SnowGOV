@@ -1293,7 +1293,6 @@ def monitor2():
 
                     labels={'TABLE_NAME': 'Table Name', 'ROW_COUNT': 'Row Count'},
 
-                    title='Low Accessibility, High Data Volume')
 
  
 
