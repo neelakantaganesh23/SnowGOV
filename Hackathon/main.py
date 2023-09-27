@@ -118,9 +118,9 @@ def database_management():
     db_sub_team_name = ''
     if choose == 'Database':
         #st.write("Create DataBase")
-        environment = st.selectbox('ENVIRONMENT :', ['DEV', 'PROD', 'STAGE', 'TEST'])
-        db_team_name = st.text_input('BUSINESS UNIT :', key="db_team_name_input")
-        db_sub_team_name = st.text_input('PROJECT :', key="db_sub_team_name_input")
+        environment = st.selectbox('**ENVIRONMENT :**', ['DEV', 'PROD', 'STAGE', 'TEST'])
+        db_team_name = st.text_input('**BUSINESS UNIT :**', key="db_team_name_input")
+        db_sub_team_name = st.text_input('**PROJECT :**', key="db_sub_team_name_input")
         # Store the values in session_state
         st.session_state.environment = environment
         st.session_state.db_team_name = db_team_name
@@ -132,10 +132,10 @@ def database_management():
     if choose == 'Schema':
         #st.write("Create Schema")
         # Retrieve the values from session_state to pre-populate the input fields
-        schema_name = st.text_input("SCHEMA NAME :", key="schema_name_input")
-        schema_env = st.text_input("ENVIRONMENT :", st.session_state.get('environment', ''), key="schema_env_input")
-        schema_team_name = st.text_input('BUSINESS UNIT :', st.session_state.get('db_team_name', ''), key="schema_team_name_input")
-        schema_sub_team_name = st.text_input('PROJECT :', st.session_state.get('db_sub_team_name', ''), key="schema_sub_team_name_input")
+        schema_name = st.text_input("**SCHEMA NAME :**", key="schema_name_input")
+        schema_env = st.text_input("**ENVIRONMENT :**", st.session_state.get('environment', ''), key="schema_env_input")
+        schema_team_name = st.text_input('**BUSINESS UNIT :**', st.session_state.get('db_team_name', ''), key="schema_team_name_input")
+        schema_sub_team_name = st.text_input('**PROJECT :**', st.session_state.get('db_sub_team_name', ''), key="schema_sub_team_name_input")
         # Using st.expander for Privilege Assignment
         with st.expander("PRIVILEGE ASSIGNMENT"):
             privilege_options = ["Read Only", "Read/Write", "Full Access"]
@@ -171,15 +171,15 @@ def user_creation_page():
     }
     )
     user_name = st.text_input("**USERNAME :**")
-    f_name = st.text_input("FIRST NAME :")
-    l_name = st.text_input("LAST NAME :")
-    email = st.text_input("EMAIL :")
+    f_name = st.text_input("**FIRST NAME :**")
+    l_name = st.text_input("**LAST NAME :**")
+    email = st.text_input("**EMAIL :**")
     if st.button("Create"):
         result = create_snowflake_user(user_name, f_name, l_name, email)
         st.write(result)  # This will display "User already exists!" if the user already exists
 def role_manage():
     role_choice = option_menu(
-        menu_title = "Role Management",
+        menu_title = "ROLE MANAGEMENT",
         options = ["Role Assign","List Users","Revoke Role"],
         icons = ["person-check","person-video2","person-fill-slash"],
         orientation = 'horizontal',
@@ -223,17 +223,17 @@ def revoke_role():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('Select User', users)
+    selected_user = st.selectbox('**Select User**', users)
     roles_table_data = fetch_roles_for_user3(selected_user)
     if not roles_table_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
-        with st.expander("Roles already assigned"):
+        with st.expander("**Roles already assigned**"):
             st.table(roles_table_data)
-    roles_to_revoke = st.multiselect('Select Roles to Revoke', [row['Role Name'] for row in roles_table_data])
+    roles_to_revoke = st.multiselect('**Select Roles to Revoke**', [row['Role Name'] for row in roles_table_data])
     if st.button('Revoke Roles'):
         if not roles_to_revoke:
-            st.warning('Please select roles to revoke.')
+            st.warning('**Please select roles to revoke.**')
         else:
             result_message = revoke_roles_and_log_using_sp3(selected_user, roles_to_revoke)
             st.write(result_message)
@@ -287,7 +287,7 @@ def role_list():
     conn.close()
     return
     # Role selection
-  chosen_role = st.selectbox('Select a Role', roles)
+  chosen_role = st.selectbox('**Select a Role**', roles)
     # Fetch users for the selected role
   users = fetch_users_for_role2(conn, chosen_role)
     # Display users in a table without index
@@ -349,10 +349,10 @@ def role_assignment():
     # Fetch all roles and filter out the roles already granted
     all_roles = fetch_all_roles()
     roles_to_display = list(set(all_roles) - set(granted_roles))
-    roles_to_grant = st.multiselect('Select Roles to Grant', roles_to_display)
+    roles_to_grant = st.multiselect('**Select Roles to Grant**', roles_to_display)
     if st.button('Assign Roles'):
         if not roles_to_grant:
-            st.warning('Please select roles to grant.')
+            st.warning('**Please select roles to grant.**')
         else:
             result_message = grant_roles_and_log_using_sp(selected_user, roles_to_grant)
             st.write(result_message)
@@ -1115,10 +1115,10 @@ def about():
 def Menu_navigator():
     with st.sidebar:
         choice = option_menu(
-           menu_title="MENU",
+           menu_title="**MENU**",
             options=["USER","DATABASE" ,"ROLE", "MONITOR","ABOUT"],
             icons=["people-fill","database-fill", "person-lines-fill", "tv-fill","info-circle-fill"],
-            menu_icon="snow2",
+           #menu_icon="snow2",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
