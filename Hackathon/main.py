@@ -101,7 +101,7 @@ def create_schema(conn, environment, team_name, sub_team_name, schema_name, powe
 def database_management():
     choose = option_menu(
         menu_title="PROJECT SPACE",
-        options=["Database", "Schema"], 
+        options=["DATABASE", "SCHEMA"], 
         icons=["database-fill-add", "database-fill-lock"],
         orientation="horizontal",
         menu_icon="database-fill-gear",
@@ -180,7 +180,7 @@ def user_creation_page():
 def role_manage():
     role_choice = option_menu(
         menu_title = "ROLE MANAGEMENT",
-        options = ["Role Assign","List Users","Revoke Role"],
+        options = ["ROLE ASSIGN","LIST USERS","REVOKE ROLE"],
         icons = ["person-check","person-video2","person-fill-slash"],
         orientation = 'horizontal',
         menu_icon = 'person-fill-gear',
