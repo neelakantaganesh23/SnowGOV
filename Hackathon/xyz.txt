@@ -1,5 +1,0 @@
-kt16687.us-east-2.aws
-
-STMSNW
-
-BASE_SCH
