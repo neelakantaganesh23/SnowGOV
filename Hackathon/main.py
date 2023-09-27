@@ -144,7 +144,7 @@ def database_management():
             data_engineer_privilege = st.selectbox("DATA ENGINEER", privilege_options, index=0)
             if power_user_privilege == "Read Only" and analyst_privilege == "Full Access":
                 st.write("Invalid combination: POWER USER cannot have lower privileges than ANALYST.")
-        if st.button('Create'):
+        if st.button('CREATE'):
             set_role(conn, "ACCOUNTADMIN")
             message = create_schema(conn, schema_env, schema_team_name, schema_sub_team_name, schema_name,
                                     power_user_privilege, analyst_privilege, data_engineer_privilege)
@@ -174,7 +174,7 @@ def user_creation_page():
     f_name = st.text_input("**FIRST NAME :**")
     l_name = st.text_input("**LAST NAME :**")
     email = st.text_input("**EMAIL :**")
-    if st.button("Create"):
+    if st.button("CREATE"):
         result = create_snowflake_user(user_name, f_name, l_name, email)
         st.write(result)  # This will display "User already exists!" if the user already exists
 def role_manage():
@@ -287,7 +287,7 @@ def role_list():
     conn.close()
     return
     # Role selection
-  chosen_role = st.selectbox('**Select a Role**', roles)
+  chosen_role = st.selectbox('**SELECT A ROLE**', roles)
     # Fetch users for the selected role
   users = fetch_users_for_role2(conn, chosen_role)
     # Display users in a table without index
@@ -359,7 +359,7 @@ def role_assignment():
 def monitor():
     dont_choose = option_menu(
         menu_title="CREDITS USAGE",
-        options=["Account Usage", "Detail Metrics"],
+        options=["ACCOUNT USAGE", "DETAIL METRICS"],
         icons=["display-fill", "display-fill"],
         orientation="horizontal",
          styles={
@@ -368,9 +368,9 @@ def monitor():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    if dont_choose == "Account Usage":
+    if dont_choose == "ACCOUNT USAGE":
         monitor2()
-    elif dont_choose == "Detail Metrics":
+    elif dont_choose == "DETAIL METRICS":
         monitor3()
 def execute_query(conn, query):
     cur = conn.cursor()
@@ -1118,7 +1118,7 @@ def Menu_navigator():
            menu_title="MENU",
             options=["USER","DATABASE" ,"ROLE", "MONITOR","ABOUT"],
             icons=["people-fill","database-fill", "person-lines-fill", "tv-fill","info-circle-fill"],
-           #menu_icon="snow2",
+            menu_icon="menu-button-wide-fill",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
