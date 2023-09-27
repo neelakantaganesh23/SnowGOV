@@ -170,7 +170,7 @@ def user_creation_page():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    user_name = st.text_input("USERNAME :")
+    user_name = st.text_input("**USERNAME :**")
     f_name = st.text_input("FIRST NAME :")
     l_name = st.text_input("LAST NAME :")
     email = st.text_input("EMAIL :")
