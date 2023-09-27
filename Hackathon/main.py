@@ -116,7 +116,7 @@ def database_management():
     environment = ''
     db_team_name = ''
     db_sub_team_name = ''
-    if choose == 'Database':
+    if choose == 'DATABASE':
         #st.write("Create DataBase")
         environment = st.selectbox('**ENVIRONMENT :**', ['DEV', 'PROD', 'STAGE', 'TEST'])
         db_team_name = st.text_input('**BUSINESS UNIT :**', key="db_team_name_input")
@@ -125,11 +125,11 @@ def database_management():
         st.session_state.environment = environment
         st.session_state.db_team_name = db_team_name
         st.session_state.db_sub_team_name = db_sub_team_name
-        if st.button('SETUP'):
+        if st.button('**SETUP**'):
             set_role(conn, "ACCOUNTADMIN")
             message = create_database_and_schema(conn, environment, db_team_name, db_sub_team_name)
             st.write(message)
-    if choose == 'Schema':
+    if choose == 'SCHEMA':
         #st.write("Create Schema")
         # Retrieve the values from session_state to pre-populate the input fields
         schema_name = st.text_input("**SCHEMA NAME :**", key="schema_name_input")
@@ -190,11 +190,11 @@ def role_manage():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    if role_choice == 'Role Assign':
+    if role_choice == 'ROLE ASSIGN':
         role_assignment()
-    if role_choice == 'List Users':
+    if role_choice == 'LIST USERS':
         role_list()
-    if role_choice == 'Revoke Role':
+    if role_choice == 'REVOKE ROLE':
         revoke_role()
 def fetch_roles_for_user3(username):
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
