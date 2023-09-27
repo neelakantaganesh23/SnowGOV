@@ -1221,7 +1221,7 @@ def monitor2():
     else:
 
         st.write("No data available for the given date range.")
-    LOW_ACCESS_HIGH_VOLUME_SQL = """
+   LOW_ACCESS_HIGH_VOLUME_SQL = """
 
     SELECT * FROM
 
@@ -1279,8 +1279,6 @@ def monitor2():
 
  
 
-    st.title("Low Accessibility, High Data Volume")
-
  
 
     df = load_data()
@@ -1293,6 +1291,7 @@ def monitor2():
 
                     labels={'TABLE_NAME': 'Table Name', 'ROW_COUNT': 'Row Count'},
 
+                    title='Low Accessibility, High Data Volume')
 
  
 
