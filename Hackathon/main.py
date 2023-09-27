@@ -223,14 +223,14 @@ def revoke_role():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('**Select User**', users)
+    selected_user = st.selectbox('**SELECT USER**', users)
     roles_table_data = fetch_roles_for_user3(selected_user)
     if not roles_table_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
         with st.expander("**Roles already assigned**"):
             st.table(roles_table_data)
-    roles_to_revoke = st.multiselect('**Select Roles to Revoke**', [row['Role Name'] for row in roles_table_data])
+    roles_to_revoke = st.multiselect('**SELECT ROLES TO REVOKE**', [row['Role Name'] for row in roles_table_data])
     if st.button('Revoke Roles'):
         if not roles_to_revoke:
             st.warning('**Please select roles to revoke.**')
@@ -338,18 +338,18 @@ def role_assignment():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('**Select User**', users)
+    selected_user = st.selectbox('**SELECT USER**', users)
     granted_roles_data = fetch_roles_for_user(selected_user)
     granted_roles = [row['Role Name'] for row in granted_roles_data]
     if not granted_roles_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
-        with st.expander("**Roles already assigned**"):
+        with st.expander("**ROLES ALREADY ASSIGNED**"):
             st.table(granted_roles_data)
     # Fetch all roles and filter out the roles already granted
     all_roles = fetch_all_roles()
     roles_to_display = list(set(all_roles) - set(granted_roles))
-    roles_to_grant = st.multiselect('**Select Roles to Grant**', roles_to_display)
+    roles_to_grant = st.multiselect('**SELECT ROLES TO GRANT**', roles_to_display)
     if st.button('Assign Roles'):
         if not roles_to_grant:
             st.warning('**Please select roles to grant.**')
