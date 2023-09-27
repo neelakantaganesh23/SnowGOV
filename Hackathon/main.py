@@ -361,7 +361,7 @@ def monitor():
         menu_title="CREDITS USAGE",
         options=["ACCOUNT USAGE", "DETAIL METRICS"],
         icons=["display-fill", "display-fill"],
-        menu_icon='currency-exchange',
+        menu_icon='coin',
         orientation="horizontal",
          styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
