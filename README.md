@@ -1,4 +1,5 @@
 # SnowGOV :question:
+:smile:
 Project is to demonstrate the power of Snowflake Native Apps. The objective of the project is to develop an App that provides GUI based governance features for managing Snowflake environment.
 -User interface through which the IT team can configure Organization and Account Parameters
 -User Interface through which IT teams can create Projects ( a logical entity), For each Project they can create multiple Environments (Dev, Stage, Production). Internally for each environment, the app
