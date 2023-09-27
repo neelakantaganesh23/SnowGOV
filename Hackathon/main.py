@@ -161,7 +161,7 @@ def create_snowflake_user(user_name, f_name, l_name, email):
 def user_creation_page():
     not_required = option_menu(
         menu_title = "USER CREATION",
-        options = ["User"],
+        options = ["USER"],
         icons=['person-bounding-box'],
         menu_icon ='person-fill-add',
          styles={
