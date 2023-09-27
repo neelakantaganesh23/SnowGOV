@@ -1222,10 +1222,9 @@ def monitor2():
 
         st.write("No data available for the given date range.")
         
-   LOW_ACCESS_HIGH_VOLUME_SQL = """SELECT * FROM
-
+   LOW_ACCESS_HIGH_VOLUME_SQL = """
+   SELECT * FROM
     (
-
         select distinct current_account() as account, current_region() as region, ROW_COUNT,  TAB.TABLE_NAME, TABLE_TYPE, DATABASE_NAME, SCHEMA_NAME, USERS, QUERIES from
 
         (SELECT
@@ -1254,7 +1253,8 @@ def monitor2():
 
     order by ROW_COUNT desc,9,8
 
-    limit 10; """
+    limit 10; 
+    """
 
  
 
