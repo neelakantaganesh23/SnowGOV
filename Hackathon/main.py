@@ -338,13 +338,13 @@ def role_assignment():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('Select User', users)
+    selected_user = st.selectbox('**Select User**', users)
     granted_roles_data = fetch_roles_for_user(selected_user)
     granted_roles = [row['Role Name'] for row in granted_roles_data]
     if not granted_roles_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
-        with st.expander("Roles already assigned"):
+        with st.expander("**Roles already assigned**"):
             st.table(granted_roles_data)
     # Fetch all roles and filter out the roles already granted
     all_roles = fetch_all_roles()
@@ -1115,7 +1115,7 @@ def about():
 def Menu_navigator():
     with st.sidebar:
         choice = option_menu(
-           menu_title="**MENU**",
+           menu_title="MENU",
             options=["USER","DATABASE" ,"ROLE", "MONITOR","ABOUT"],
             icons=["people-fill","database-fill", "person-lines-fill", "tv-fill","info-circle-fill"],
            #menu_icon="snow2",
