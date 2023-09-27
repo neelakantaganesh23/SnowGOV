@@ -101,7 +101,7 @@ def create_schema(conn, environment, team_name, sub_team_name, schema_name, powe
 def database_management():
     choose = option_menu(
         menu_title="PROJECT SPACE",
-        options=["Database", "Schema"], 
+        options=["DATABASE", "SCHEMA"], 
         icons=["database-fill-add", "database-fill-lock"],
         orientation="horizontal",
         menu_icon="database-fill-gear",
@@ -116,26 +116,26 @@ def database_management():
     environment = ''
     db_team_name = ''
     db_sub_team_name = ''
-    if choose == 'Database':
+    if choose == 'DATABASE':
         #st.write("Create DataBase")
-        environment = st.selectbox('ENVIRONMENT :', ['DEV', 'PROD', 'STAGE', 'TEST'])
-        db_team_name = st.text_input('BUSINESS UNIT :', key="db_team_name_input")
-        db_sub_team_name = st.text_input('PROJECT :', key="db_sub_team_name_input")
+        environment = st.selectbox('**ENVIRONMENT :**', ['DEV', 'PROD', 'STAGE', 'TEST'])
+        db_team_name = st.text_input('**BUSINESS UNIT :**', key="db_team_name_input")
+        db_sub_team_name = st.text_input('**PROJECT :**', key="db_sub_team_name_input")
         # Store the values in session_state
         st.session_state.environment = environment
         st.session_state.db_team_name = db_team_name
         st.session_state.db_sub_team_name = db_sub_team_name
-        if st.button('SETUP'):
+        if st.button('**SETUP**'):
             set_role(conn, "ACCOUNTADMIN")
             message = create_database_and_schema(conn, environment, db_team_name, db_sub_team_name)
             st.write(message)
-    if choose == 'Schema':
+    if choose == 'SCHEMA':
         #st.write("Create Schema")
         # Retrieve the values from session_state to pre-populate the input fields
-        schema_name = st.text_input("SCHEMA NAME :", key="schema_name_input")
-        schema_env = st.text_input("ENVIRONMENT :", st.session_state.get('environment', ''), key="schema_env_input")
-        schema_team_name = st.text_input('BUSINESS UNIT :', st.session_state.get('db_team_name', ''), key="schema_team_name_input")
-        schema_sub_team_name = st.text_input('PROJECT :', st.session_state.get('db_sub_team_name', ''), key="schema_sub_team_name_input")
+        schema_name = st.text_input("**SCHEMA NAME :**", key="schema_name_input")
+        schema_env = st.text_input("**ENVIRONMENT :**", st.session_state.get('environment', ''), key="schema_env_input")
+        schema_team_name = st.text_input('**BUSINESS UNIT :**', st.session_state.get('db_team_name', ''), key="schema_team_name_input")
+        schema_sub_team_name = st.text_input('**PROJECT :**', st.session_state.get('db_sub_team_name', ''), key="schema_sub_team_name_input")
         # Using st.expander for Privilege Assignment
         with st.expander("PRIVILEGE ASSIGNMENT"):
             privilege_options = ["Read Only", "Read/Write", "Full Access"]
@@ -144,7 +144,7 @@ def database_management():
             data_engineer_privilege = st.selectbox("DATA ENGINEER", privilege_options, index=0)
             if power_user_privilege == "Read Only" and analyst_privilege == "Full Access":
                 st.write("Invalid combination: POWER USER cannot have lower privileges than ANALYST.")
-        if st.button('Create'):
+        if st.button('CREATE'):
             set_role(conn, "ACCOUNTADMIN")
             message = create_schema(conn, schema_env, schema_team_name, schema_sub_team_name, schema_name,
                                     power_user_privilege, analyst_privilege, data_engineer_privilege)
@@ -161,7 +161,7 @@ def create_snowflake_user(user_name, f_name, l_name, email):
 def user_creation_page():
     not_required = option_menu(
         menu_title = "USER CREATION",
-        options = ["User"],
+        options = ["USER"],
         icons=['person-bounding-box'],
         menu_icon ='person-fill-add',
          styles={
@@ -170,17 +170,17 @@ def user_creation_page():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    user_name = st.text_input("USERNAME :")
-    f_name = st.text_input("FIRST NAME :")
-    l_name = st.text_input("LAST NAME :")
-    email = st.text_input("EMAIL :")
-    if st.button("Create"):
+    user_name = st.text_input("**USERNAME :**")
+    f_name = st.text_input("**FIRST NAME :**")
+    l_name = st.text_input("**LAST NAME :**")
+    email = st.text_input("**EMAIL :**")
+    if st.button("CREATE"):
         result = create_snowflake_user(user_name, f_name, l_name, email)
         st.write(result)  # This will display "User already exists!" if the user already exists
 def role_manage():
     role_choice = option_menu(
-        menu_title = "Role Management",
-        options = ["Role Assign","List Users","Revoke Role"],
+        menu_title = "ROLE MANAGEMENT",
+        options = ["ROLE ASSIGN","LIST USERS","REVOKE ROLE"],
         icons = ["person-check","person-video2","person-fill-slash"],
         orientation = 'horizontal',
         menu_icon = 'person-fill-gear',
@@ -190,11 +190,11 @@ def role_manage():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    if role_choice == 'Role Assign':
+    if role_choice == 'ROLE ASSIGN':
         role_assignment()
-    if role_choice == 'List Users':
+    if role_choice == 'LIST USERS':
         role_list()
-    if role_choice == 'Revoke Role':
+    if role_choice == 'REVOKE ROLE':
         revoke_role()
 def fetch_roles_for_user3(username):
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
@@ -223,17 +223,17 @@ def revoke_role():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('Select User', users)
+    selected_user = st.selectbox('**SELECT USER**', users)
     roles_table_data = fetch_roles_for_user3(selected_user)
     if not roles_table_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
-        with st.expander("Roles already assigned"):
+        with st.expander("**Roles already assigned**"):
             st.table(roles_table_data)
-    roles_to_revoke = st.multiselect('Select Roles to Revoke', [row['Role Name'] for row in roles_table_data])
+    roles_to_revoke = st.multiselect('**SELECT ROLES TO REVOKE**', [row['Role Name'] for row in roles_table_data])
     if st.button('Revoke Roles'):
         if not roles_to_revoke:
-            st.warning('Please select roles to revoke.')
+            st.warning('**Please select roles to revoke.**')
         else:
             result_message = revoke_roles_and_log_using_sp3(selected_user, roles_to_revoke)
             st.write(result_message)
@@ -287,7 +287,7 @@ def role_list():
     conn.close()
     return
     # Role selection
-  chosen_role = st.selectbox('Select a Role', roles)
+  chosen_role = st.selectbox('**SELECT A ROLE**', roles)
     # Fetch users for the selected role
   users = fetch_users_for_role2(conn, chosen_role)
     # Display users in a table without index
@@ -338,29 +338,30 @@ def role_assignment():
     con = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     users = [row[0] for row in con.cursor().execute('SHOW USERS;').fetchall()]
     con.close()
-    selected_user = st.selectbox('Select User', users)
+    selected_user = st.selectbox('**SELECT USER**', users)
     granted_roles_data = fetch_roles_for_user(selected_user)
     granted_roles = [row['Role Name'] for row in granted_roles_data]
     if not granted_roles_data:
         st.warning(f'No roles assigned to {selected_user} yet.')
     else:
-        with st.expander("Roles already assigned"):
+        with st.expander("**ROLES ALREADY ASSIGNED**"):
             st.table(granted_roles_data)
     # Fetch all roles and filter out the roles already granted
     all_roles = fetch_all_roles()
     roles_to_display = list(set(all_roles) - set(granted_roles))
-    roles_to_grant = st.multiselect('Select Roles to Grant', roles_to_display)
+    roles_to_grant = st.multiselect('**SELECT ROLES TO GRANT**', roles_to_display)
     if st.button('Assign Roles'):
         if not roles_to_grant:
-            st.warning('Please select roles to grant.')
+            st.warning('**Please select roles to grant.**')
         else:
             result_message = grant_roles_and_log_using_sp(selected_user, roles_to_grant)
             st.write(result_message)
 def monitor():
     dont_choose = option_menu(
         menu_title="CREDITS USAGE",
-        options=["Account Usage", "Detail Metrics"],
+        options=["ACCOUNT USAGE", "DETAIL METRICS"],
         icons=["display-fill", "display-fill"],
+        menu_icon='coin',
         orientation="horizontal",
          styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
@@ -368,9 +369,9 @@ def monitor():
         "nav-link-selected": {"background-color": "#0096FF"},
     }
     )
-    if dont_choose == "Account Usage":
+    if dont_choose == "ACCOUNT USAGE":
         monitor2()
-    elif dont_choose == "Detail Metrics":
+    elif dont_choose == "DETAIL METRICS":
         monitor3()
 def execute_query(conn, query):
     cur = conn.cursor()
@@ -924,7 +925,7 @@ def monitor2():
         queries_data.WAREHOUSE_NAME.eq(selected_warehouse)
     ]
     gui.subsubheader(
-        "Histogram of **queries duration** (in secs)"
+        "Histogram of **queries duration** (in secs)", "Log scale"
     )
     # Histogram
     histogram = charts.get_histogram_chart(
@@ -979,7 +980,7 @@ def monitor2():
     gui.space(1)
     gui.subsubheader(
         "**Query VS Time Frequency**: longest and most frequent queries",
-        
+        "Log scales (🖱️ hover for real values!)",
     )
     queries_agg = sf.sql_to_dataframe(
         sql.QUERIES_COUNT_QUERY.format(
@@ -1022,6 +1023,154 @@ def monitor2():
         height=200,
         use_container_width=True,
     )
+    MOST_NUM_QUERIES_SQL = """
+    SELECT * FROM (
+        SELECT current_account() as account,
+            current_region() as region,
+            user_name,
+            warehouse_name,
+            ROUND(SUM(execution_time)/(1000*60*60),1) exec_hrs,
+            COUNT(1) AS num_queries
+        FROM snowflake.account_usage.query_history
+        WHERE start_time BETWEEN %(date_from)s AND %(date_to)s
+        GROUP BY 1,2,3,4
+    ) QRY
+    ORDER BY num_queries DESC
+    LIMIT 10;
+    """
+
+
+    # Execute the new SQL Query and get the DataFrame
+    with snowflake.connector.connect(**SNOWFLAKE_CONFIG) as conn:
+        cur = conn.cursor(snowflake.connector.DictCursor)
+        cur.execute(
+            MOST_NUM_QUERIES_SQL,
+            {"date_from": date_from, "date_to": date_to}
+        )
+        most_num_queries_df = pd.DataFrame(cur.fetchall())
+        most_num_queries_df.columns = [col[0] for col in cur.description]
+
+    # If DataFrame is not empty, display the Pie Chart
+    if not most_num_queries_df.empty:
+        # Sort the DataFrame by 'NUM_QUERIES' in descending order
+        most_num_queries_df = most_num_queries_df.sort_values(by='NUM_QUERIES', ascending=False)
+        st.markdown("  \n")  # Adds a newline as a space
+        st.markdown("**Distribution of Queries Executed by User**")
+
+        # Create a pie chart using Plotly Express
+        fig = px.pie(most_num_queries_df,
+                    names='USER_NAME',
+                    values='NUM_QUERIES')
+
+        # Adjusting the layout for better readability
+        fig.update_traces(textinfo='label+percent')  # 'label+percent' shows the label and percentage on the pie chart.
+        fig.update_layout(margin={"r":0,"t":40,"l":0,"b":0})  # Adjusting margins for better layout
+
+        # Display the graph
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available for the given date range.")
+
+    MOST_EXEC_HRS_SQL = """
+    SELECT * FROM (
+        SELECT current_account() as account,
+            current_region() as region,
+            user_name,
+            warehouse_name,
+            ROUND(SUM(execution_time)/(1000*60*60),1) exec_hrs,
+            COUNT(1) AS num_queries
+        FROM snowflake.account_usage.query_history
+        WHERE start_time BETWEEN %(date_from)s AND %(date_to)s
+        GROUP BY 1,2,3,4
+    ) QRY
+    ORDER BY exec_hrs DESC
+    LIMIT 10;
+    """
+
+
+
+
+
+    # Correctly execute the new SQL Query and get the DataFrame
+    with snowflake.connector.connect(**SNOWFLAKE_CONFIG) as conn:
+        cur = conn.cursor(snowflake.connector.DictCursor)
+        cur.execute(MOST_EXEC_HRS_SQL, {"date_from": date_from, "date_to": date_to})
+        most_exec_hrs_df = pd.DataFrame(cur.fetchall())
+        most_exec_hrs_df.columns = [col[0] for col in cur.description]
+
+
+# If DataFrame is not empty, display the Bar Chart
+    if not most_exec_hrs_df.empty:
+        # Create a Plotly Bar Chart without displaying execution hours on the bars
+        fig = px.bar(most_exec_hrs_df,
+                    x='USER_NAME',
+                    y='EXEC_HRS',
+                    labels={'USER_NAME': 'User Name', 'EXEC_HRS': 'Execution Hours'},
+                    title='Users with Most Query Execution Hours')
+
+        # Update layout for a cleaner appearance
+        fig.update_layout(
+            uniformtext_minsize=8,
+            uniformtext_mode='hide',
+            xaxis_title='Users',
+            yaxis_title='Execution Hours (hrs)',
+            bargap=0.2,  # gap between bars
+            bargroupgap=0.1  # gap between groups
+        )
+
+        # Display the Plotly Chart
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available for the given date range.")
+
+
+    LOW_ACCESS_HIGH_VOLUME_SQL = """
+    SELECT * FROM
+    (
+        select distinct current_account() as account, current_region() as region, ROW_COUNT,  TAB.TABLE_NAME, TABLE_TYPE, DATABASE_NAME, SCHEMA_NAME, USERS, QUERIES from
+        (SELECT
+        split_part(f1.value:"objectName"::string, '.', 1) AS database_name
+        ,split_part(f1.value:"objectName"::string, '.', 2) AS schema_name
+        ,split_part(f1.value:"objectName"::string, '.', 3) AS table_name
+        ,COUNT(DISTINCT USER_NAME) AS users
+        ,COUNT(DISTINCT QUERY_ID) AS queries
+        FROM SNOWFLAKE.ACCOUNT_USAGE.ACCESS_HISTORY
+        , lateral flatten(base_objects_accessed) f1  GROUP BY 1,2,3) QH,
+        (select ROW_COUNT,TABLE_NAME, TABLE_SCHEMA, TABLE_TYPE from "SNOWFLAKE"."ACCOUNT_USAGE"."TABLES"
+        where DELETED is null) TAB where TAB.TABLE_NAME = QH.TABLE_NAME
+        and (QH.USERS < 2 and QH.QUERIES < 5)
+    )
+    order by ROW_COUNT desc,9,8
+    limit 10;
+    """
+
+    def load_data():
+        with snowflake.connector.connect(**SNOWFLAKE_CONFIG) as conn:
+            cur = conn.cursor(snowflake.connector.DictCursor)
+            cur.execute(LOW_ACCESS_HIGH_VOLUME_SQL)
+            df = pd.DataFrame(cur.fetchall())
+            df.columns = [col[0] for col in cur.description]
+        return df
+
+
+
+    df = load_data()
+
+    if not df.empty:
+        fig = px.bar(df, x='TABLE_NAME', y='ROW_COUNT',
+
+                    labels={'TABLE_NAME': 'Table Name', 'ROW_COUNT': 'Row Count'},
+                    title='Low Accessibility, High Data Volume')
+
+        fig.update_layout(xaxis_title='Table',
+                        yaxis_title='Row Count',
+                        bargap=0.2,
+                        bargroupgap=0.1)
+
+        st.plotly_chart(fig)
+    else:
+        st.write("No data available.")
+        
 def about():
 
     # Create an expander for the about section
@@ -1118,7 +1267,7 @@ def Menu_navigator():
            menu_title="MENU",
             options=["USER","DATABASE" ,"ROLE", "MONITOR","ABOUT"],
             icons=["people-fill","database-fill", "person-lines-fill", "tv-fill","info-circle-fill"],
-            menu_icon="snow2",
+            menu_icon="menu-button-wide-fill",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
         "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
