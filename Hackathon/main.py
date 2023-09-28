@@ -18,12 +18,13 @@ st.sidebar.image(image, caption=None, width=None, use_column_width=None, clamp=F
 #snowflake_config = st.secrets["sf_usage_app"]
 #connect to snowflake function
 SNOWFLAKE_CONFIG = {
-    account= "pr65711.ap-southeast-1user="snowgovernance"
-    password= "Sravani@23"
-    role="accountadmin"
-    warehouse= "COMPUTE_WH"
-    database="UTIL_DB"
-    schema="ADMIN_TOOLS"
+   account= "pr65711.ap-southeast-1"
+   user="snowgovernance"
+   password= "Sravani@23"
+   role="accountadmin"
+   warehouse= "COMPUTE_WH"
+   database="UTIL_DB"
+   schema="ADMIN_TOOLS"
 }
 if "grant_users" not in st.session_state:
     st.session_state.grant_users = []
